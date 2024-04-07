@@ -1,10 +1,15 @@
+import 'package:dash_board_mopidati/screens/AcceptReports.dart';
+import 'package:dash_board_mopidati/screens/Reports.dart';
+import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'firebase_options.dart';
 import 'home.dart';
-void main() async{
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -30,13 +35,52 @@ class MyApp extends StatelessWidget {
       locale: const Locale("ar", "AE"),
       title: 'Flutter Demo',
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
-        useMaterial3: true,
+        scaffoldBackgroundColor: backgroundColor,
+        primaryColor: backgroundColor,
+        //textbutton
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: pColor,
+            textStyle: const TextStyle(
+              fontSize: 20, // حجم النص
+            ),
+          ),
+        ),
+        //text
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+              color: pColor, fontSize: 25, fontWeight: FontWeight.bold),
+          bodyLarge: TextStyle(color: pColor),
+          bodySmall: TextStyle(color: pColor),
+        ),
+        //appbar theme
+        appBarTheme: const AppBarTheme(
+          color: pColor,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.light,
+            statusBarIconBrightness: Brightness.light,
+            statusBarColor: Colors.white24,
+          ),
+        ),
+        //icon theme
+        iconTheme: const IconThemeData(color: pColor),
+        //inuprtdecoration theme
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            // تعريف حاشية الحقل المفعل
+            borderSide: BorderSide(color: pColor),
+            // تعيين لون الحاشية
+            gapPadding: 2,
+          ),
+          focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: sColor)),
+        ),
       ),
-
       routes: {
-        '/':(context) => HomeScreen(),
+        '/': (context) => const HomeScreen(),
+        '/reports': (context) => const ReportsScreen(),
+        // '/reports': (context) => UsersList(),
+        '/Accept Reports': (context) => const acceptReportScreen(),
       },
     );
   }
