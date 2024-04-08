@@ -1,27 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_board_mopidati/screens/function.dart';
-import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ReportsScreen extends StatefulWidget {
-  const ReportsScreen({super.key});
+class RejectReportScreen extends StatefulWidget {
+  const RejectReportScreen({super.key});
+
   @override
-  State<ReportsScreen> createState() => _ReportsScreenState();
+  State<RejectReportScreen> createState() => _RejectReportScreenState();
 }
 
-enum statusReport {
-  depinding,
-  Accept,
-  reject;
-}
+class _RejectReportScreenState extends State<RejectReportScreen> {
+  Future<QuerySnapshot<Map<String, dynamic>>?>? initData() async {
+    return FirebaseFirestore.instance
+        .collection("Reports")
+        .where("statusReport", isEqualTo: 2)
+        .get();
+  }
 
-class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('كل البلاغات'),
+        title: const Text('البلاغات المرفوضة '),
       ),
       body: FutureBuilder(
           future: initData(),
@@ -82,63 +82,14 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               ),
                               Text(
                                 "عنوان المكان الذي نتنشر فيه الحشرة \n: ${snap.data!.docs[index].data()["Adress"]}",
+                                // style: Theme.of(context).textTheme.titleMedium,
                               ),
-                              '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                      '0'
-                                  ? const Icon(Icons.timelapse_outlined)
-                                  : '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                          '1'
-                                      ? const Icon(
-                                          Icons.check_circle_outline_rounded)
-                                      : const Icon(Icons.clear),
-                              Row(
+                              const Row(
                                 children: [
-                                  MaterialButton(
-                                    color: backgroundColor,
-                                    elevation: 2,
-                                    textColor: pColor,
-                                    onPressed: () {
-                                      setState(() {});
-                                      acceptReport(context,
-                                          snap.data!.docs[index].data()["id"]);
-                                      print(
-                                          snap.data!.docs[index].data()["id"]);
-                                    },
-                                    child: '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                            '0'
-                                        ? const Text('قبول البلاغ')
-                                        : '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                                '1'
-                                            ? const Text('تم قبول البلاغ ')
-                                            : null,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  MaterialButton(
-                                    color: backgroundColor,
-                                    textColor: pColor,
-                                    onPressed: () {
-                                      setState(() {
-                                        rejectReport(
-                                            context,
-                                            snap.data!.docs[index]
-                                                .data()["id"]);
-                                        print(snap.data!.docs[index]
-                                            .data()["id"]);
-                                      });
-                                      print('تم رفض البلاغ');
-                                    },
-                                    child: '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                            '0'
-                                        ? const Text('رفض البلاغ')
-                                        : '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                                '1'
-                                            ? null
-                                            : const Text(' تم رفض البلاغ'),
-                                  ),
+                                  Icon(Icons.clear),
+                                  Text('تم رفض البلاغ'),
                                 ],
-                              )
+                              ),
                             ]),
                       ],
                     ),

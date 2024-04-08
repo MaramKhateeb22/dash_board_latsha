@@ -46,7 +46,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 ListTile(
                   title: const Text("البلاغات المرفوضة"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Reject Reports');
+                  },
                 ),
               ],
             ),

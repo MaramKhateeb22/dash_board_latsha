@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dash_board_mopidati/screens/function.dart';
 import 'package:flutter/material.dart';
 
-class acceptReportScreen extends StatefulWidget {
-  const acceptReportScreen({super.key});
+class AcceptReportScreen extends StatefulWidget {
+  const AcceptReportScreen({super.key});
 
   @override
-  State<acceptReportScreen> createState() => _acceptReportScreenState();
+  State<AcceptReportScreen> createState() => _AcceptReportScreenState();
 }
 
-class _acceptReportScreenState extends State<acceptReportScreen> {
+class _AcceptReportScreenState extends State<AcceptReportScreen> {
   Future<QuerySnapshot<Map<String, dynamic>>?>? initData() async {
     return FirebaseFirestore.instance
         .collection("Reports")
@@ -20,7 +21,7 @@ class _acceptReportScreenState extends State<acceptReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('كل البلاغات'),
+        title: const Text(' البلااغات المفبولة'),
       ),
       body: FutureBuilder(
           future: initData(),
@@ -48,6 +49,22 @@ class _acceptReportScreenState extends State<acceptReportScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              FutureBuilder<List<String>>(
+                                future: displayUserNames(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else if (snapshot.hasData) {
+                                    return Text(
+                                        'اسم المستخدم: ${snapshot.data![index]}');
+                                  } else {
+                                    return const Text('No data available');
+                                  }
+                                },
+                              ),
                               Container(
                                 width: 200,
                                 height: 200,
@@ -67,14 +84,12 @@ class _acceptReportScreenState extends State<acceptReportScreen> {
                                 "عنوان المكان الذي نتنشر فيه الحشرة \n: ${snap.data!.docs[index].data()["Adress"]}",
                                 // style: Theme.of(context).textTheme.titleMedium,
                               ),
-                              '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                      '0'
-                                  ? const Icon(Icons.timelapse_outlined)
-                                  : '${snap.data!.docs[index].data()["statusReport"]}' ==
-                                          '1'
-                                      ? const Icon(
-                                          Icons.check_circle_outline_rounded)
-                                      : const Icon(Icons.clear),
+                              const Row(
+                                children: [
+                                  Icon(Icons.check_circle_outline_rounded),
+                                  Text('تم قبول البلاغ'),
+                                ],
+                              )
                             ]),
                       ],
                     ),

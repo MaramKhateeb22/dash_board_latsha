@@ -1,4 +1,5 @@
 import 'package:dash_board_mopidati/screens/AcceptReports.dart';
+import 'package:dash_board_mopidati/screens/RejectsReports.dart';
 import 'package:dash_board_mopidati/screens/Reports.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -80,7 +81,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/reports': (context) => const ReportsScreen(),
         // '/reports': (context) => UsersList(),
-        '/Accept Reports': (context) => const acceptReportScreen(),
+        '/Accept Reports': (context) => const AcceptReportScreen(),
+        '/Reject Reports': (context) => const RejectReportScreen(),
       },
     );
   }
