@@ -1,6 +1,7 @@
-import 'package:dash_board_mopidati/screens/AcceptReports.dart';
-import 'package:dash_board_mopidati/screens/RejectsReports.dart';
-import 'package:dash_board_mopidati/screens/Reports.dart';
+import 'package:dash_board_mopidati/screens/Reports/AcceptReports.dart';
+import 'package:dash_board_mopidati/screens/Reports/RejectsReports.dart';
+import 'package:dash_board_mopidati/screens/Reports/Reports.dart';
+import 'package:dash_board_mopidati/screens/Reports/pendingReports.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
         // '/reports': (context) => UsersList(),
         '/Accept Reports': (context) => const AcceptReportScreen(),
         '/Reject Reports': (context) => const RejectReportScreen(),
+        '/Pending Reports': (context) => const PendingReportScreen(),
       },
     );
   }

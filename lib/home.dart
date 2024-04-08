@@ -39,6 +39,12 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  title: const Text("  البلاغات  المنتظرة"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Pending Reports');
+                  },
+                ),
+                ListTile(
                   title: const Text("البلاغات المقبولة"),
                   onTap: () {
                     Navigator.pushNamed(context, '/Accept Reports');

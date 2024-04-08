@@ -1,30 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dash_board_mopidati/screens/function.dart';
+import 'package:dash_board_mopidati/screens/Reports/function.dart';
 import 'package:flutter/material.dart';
 
-class RejectReportScreen extends StatefulWidget {
-  const RejectReportScreen({super.key});
+class AcceptReportScreen extends StatefulWidget {
+  const AcceptReportScreen({super.key});
 
   @override
-  State<RejectReportScreen> createState() => _RejectReportScreenState();
+  State<AcceptReportScreen> createState() => _AcceptReportScreenState();
 }
 
-class _RejectReportScreenState extends State<RejectReportScreen> {
-  Future<QuerySnapshot<Map<String, dynamic>>?>? initData() async {
-    return FirebaseFirestore.instance
-        .collection("Reports")
-        .where("statusReport", isEqualTo: 2)
-        .get();
-  }
-
+class _AcceptReportScreenState extends State<AcceptReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('البلاغات المرفوضة '),
+        title: const Text(' البلااغات المفبولة'),
       ),
       body: FutureBuilder(
-          future: initData(),
+          future: initDataAccept(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -50,7 +42,7 @@ class _RejectReportScreenState extends State<RejectReportScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FutureBuilder<List<String>>(
-                                future: displayUserNames(),
+                                future: displayUserNamesAccept(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -86,10 +78,10 @@ class _RejectReportScreenState extends State<RejectReportScreen> {
                               ),
                               const Row(
                                 children: [
-                                  Icon(Icons.clear),
-                                  Text('تم رفض البلاغ'),
+                                  Icon(Icons.check_circle_outline_rounded),
+                                  Text('تم قبول البلاغ'),
                                 ],
-                              ),
+                              )
                             ]),
                       ],
                     ),

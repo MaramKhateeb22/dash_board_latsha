@@ -1,30 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dash_board_mopidati/screens/function.dart';
+import 'package:dash_board_mopidati/screens/Reports/function.dart';
 import 'package:flutter/material.dart';
 
-class AcceptReportScreen extends StatefulWidget {
-  const AcceptReportScreen({super.key});
+class PendingReportScreen extends StatefulWidget {
+  const PendingReportScreen({super.key});
 
   @override
-  State<AcceptReportScreen> createState() => _AcceptReportScreenState();
+  State<PendingReportScreen> createState() => _PendingReportScreenState();
 }
 
-class _AcceptReportScreenState extends State<AcceptReportScreen> {
-  Future<QuerySnapshot<Map<String, dynamic>>?>? initData() async {
-    return FirebaseFirestore.instance
-        .collection("Reports")
-        .where("statusReport", isEqualTo: 1)
-        .get();
-  }
-
+class _PendingReportScreenState extends State<PendingReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' البلااغات المفبولة'),
+        title: const Text(' البلاغات المنتظرة'),
       ),
       body: FutureBuilder(
-          future: initData(),
+          future: initDataPending(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -32,8 +24,10 @@ class _AcceptReportScreenState extends State<AcceptReportScreen> {
             if (snap.hasError) return const Text("Something has error");
             if (snap.data == null) {
               print('empty data');
-              return const Text("Empty data");
+              // return const Text("Empty data");
+              return const Text('لايوجد بلاغات قيد الانتظار');
             }
+
             return ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: snap.data?.docs.length ?? 0,
@@ -50,7 +44,7 @@ class _AcceptReportScreenState extends State<AcceptReportScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FutureBuilder<List<String>>(
-                                future: displayUserNames(),
+                                future: displayUserNamesPending(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -86,8 +80,8 @@ class _AcceptReportScreenState extends State<AcceptReportScreen> {
                               ),
                               const Row(
                                 children: [
-                                  Icon(Icons.check_circle_outline_rounded),
-                                  Text('تم قبول البلاغ'),
+                                  Icon(Icons.timelapse_outlined),
+                                  Text('في انتظار قبول البلاغ'),
                                 ],
                               )
                             ]),

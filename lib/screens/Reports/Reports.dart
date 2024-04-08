@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dash_board_mopidati/screens/function.dart';
+import 'package:dash_board_mopidati/screens/Reports/function.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
