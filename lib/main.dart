@@ -1,7 +1,17 @@
+import 'package:dash_board_mopidati/screens/Instructions/AllInstraction.dart';
+import 'package:dash_board_mopidati/screens/Instructions/NewInstraction.dart';
 import 'package:dash_board_mopidati/screens/Reports/AcceptReports.dart';
+import 'package:dash_board_mopidati/screens/Reports/ItemReport.dart';
 import 'package:dash_board_mopidati/screens/Reports/RejectsReports.dart';
 import 'package:dash_board_mopidati/screens/Reports/Reports.dart';
 import 'package:dash_board_mopidati/screens/Reports/pendingReports.dart';
+import 'package:dash_board_mopidati/screens/Reverse/AcceptReverse.dart';
+import 'package:dash_board_mopidati/screens/Reverse/DoneReverese.dart';
+import 'package:dash_board_mopidati/screens/Reverse/ItemRevers.dart';
+import 'package:dash_board_mopidati/screens/Reverse/RejectsReverse.dart';
+import 'package:dash_board_mopidati/screens/Reverse/Reverse.dart';
+import 'package:dash_board_mopidati/screens/Reverse/pendingReverse.dart';
+import 'package:dash_board_mopidati/screens/users/AllUsers.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -37,24 +47,40 @@ class MyApp extends StatelessWidget {
       locale: const Locale("ar", "AE"),
       title: 'Flutter Demo',
       theme: ThemeData(
+        cardTheme: CardTheme(
+          shadowColor: Colors.grey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          // clipBehavior: Clip.antiAlias,
+          color: cardbackground,
+          elevation: 10,
+          margin: const EdgeInsets.all(4),
+        ),
+        cardColor: cardbackground,
+        listTileTheme: const ListTileThemeData(iconColor: pColor),
         scaffoldBackgroundColor: backgroundColor,
         primaryColor: backgroundColor,
         //textbutton
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: pColor,
+            // foregroundColor: pColor,
             textStyle: const TextStyle(
-              fontSize: 20, // حجم النص
+              fontSize: 17, // حجم النص
             ),
           ),
         ),
         //text
         textTheme: const TextTheme(
           bodyMedium: TextStyle(
-              color: pColor, fontSize: 25, fontWeight: FontWeight.bold),
+            // color: pColor,
+            fontSize: 22,
+            // fontWeight: FontWeight.bold
+          ),
           bodyLarge: TextStyle(color: pColor),
           bodySmall: TextStyle(color: pColor),
         ),
+
         //appbar theme
         appBarTheme: const AppBarTheme(
           color: pColor,
@@ -80,11 +106,26 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomeScreen(),
+        //Reports
         '/reports': (context) => const ReportsScreen(),
         // '/reports': (context) => UsersList(),
         '/Accept Reports': (context) => const AcceptReportScreen(),
         '/Reject Reports': (context) => const RejectReportScreen(),
         '/Pending Reports': (context) => const PendingReportScreen(),
+        '/Iteme Report': (context) => const ItemeReport(),
+
+        //Reverse
+        '/reverse': (context) => const ReversesScreen(),
+        '/Accept Reverse': (context) => const AcceptReverseScreen(),
+        '/Reject Reverse': (context) => const RejectReverseScreen(),
+        '/pending Reverse': (context) => const PendingReverseScreen(),
+        '/Done Reverse': (context) => const DoneReverseScreen(),
+        '/Iteme Reverse': (context) => const ItemeReverse(),
+
+        //instraction
+        '/NewInstarctionScreen': (context) => const NewInstarctionScreen(),
+        '/AllInsractions': (context) => const AllInsractions(),
+        '/AllUsers': (context) => const AllUsers(),
       },
     );
   }

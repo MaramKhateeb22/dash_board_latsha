@@ -22,35 +22,57 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: backgroundColor,
         child: ListView(
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
+            DrawerHeader(
+              decoration: const BoxDecoration(
                   // color: Colors.blue,
                   ),
-              child: Center(child: Text('القائمة')),
+              child: Column(
+                children: [
+                  // ListTile(
+                  //   title: const Text(" جميع الارشادات"),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(context, '/AllInsractions');
+                  //   },
+                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.people_alt_sharp),
+                    title: const Text("عملاؤنا"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/AllUsers');
+                    },
+                  ),
+                ],
+              ),
             ),
             // مجموعة البلاغات
             ExpansionTile(
+              leading: const Icon(Icons.menu),
+              initiallyExpanded: true,
               title: const Text("البلاغات"),
               children: <Widget>[
                 ListTile(
+                  leading: const Icon(Icons.report),
                   title: const Text(" جميع البلاغات"),
                   onTap: () {
                     Navigator.pushNamed(context, '/reports');
                   },
                 ),
                 ListTile(
-                  title: const Text("  البلاغات  المنتظرة"),
+                  leading: const Icon(Icons.timelapse),
+                  title: const Text(" البلاغات  المنتظرة"),
                   onTap: () {
                     Navigator.pushNamed(context, '/Pending Reports');
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.done),
                   title: const Text("البلاغات المقبولة"),
                   onTap: () {
                     Navigator.pushNamed(context, '/Accept Reports');
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.clear),
                   title: const Text("البلاغات المرفوضة"),
                   onTap: () {
                     Navigator.pushNamed(context, '/Reject Reports');
@@ -60,36 +82,66 @@ class HomeScreen extends StatelessWidget {
             ),
             // مجموعة الحجوزات
             ExpansionTile(
+              initiallyExpanded: true,
+              leading: const Icon(Icons.timelapse_sharp),
               title: const Text("الحجوزات"),
               children: <Widget>[
                 ListTile(
-                  title: const Text("الحجوزات المقبولة"),
+                  leading: const Icon(Icons.menu),
+                  title: const Text(" جميع الحجوزات "),
                   onTap: () {
-                    Navigator.pushNamed(context, '/Accept Reports');
+                    Navigator.pushNamed(context, '/reverse');
                   },
                 ),
                 ListTile(
-                  title: const Text("الحجوزات المرفوضة"),
-                  onTap: () {},
+                  leading: const Icon(Icons.timelapse_sharp),
+                  title: const Text("الحجوزات المنتظرة "),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/pending Reverse');
+                  },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.check),
+                  title: const Text("الحجوزات المقبولة"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Accept Reverse');
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.clear),
+                  title: const Text("الحجوزات المرفوضة"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Reject Reverse');
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.done_all),
                   title: const Text("الحجوزات المنجزة"),
                   onTap: () {
-                    // كود الانتقال لشاشة الحجوزات المرفوضة
+                    Navigator.pushNamed(context,
+                        '/Done Reverse'); // كود الانتقال لشاشة الحجوزات المرفوضة
                   },
                 ),
               ],
             ),
+
             ExpansionTile(
+              initiallyExpanded: true,
               title: const Text("الارشادات"),
               children: <Widget>[
                 ListTile(
+                  leading: const Icon(Icons.edit_document),
                   title: const Text(" جميع الارشادات"),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/AllInsractions');
+                  },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.dashboard_customize),
                   title: const Text("إضافة إرشادات "),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/NewInstarctionScreen');
+                  },
                 ),
               ],
             ),
@@ -97,47 +149,6 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-
-      // drawer: Drawer(
-      //   child: ListView(children: <Widget>[
-      //     DrawerHeader(
-      //       padding: const EdgeInsets.all(20),
-      //       decoration: const BoxDecoration(
-      //         color: backgroundColor,
-      //       ),
-      //       child: Column(
-      //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //           children: [
-      //             ListTile(
-      //               leading: const Icon(Icons.home),
-      //               title: const Text('الرئيسية'),
-      //               onTap: () {
-      //                 Navigator.pushNamed(context, '/home');
-      //               },
-      //             ),
-      //             ListTile(
-      //               leading: const Icon(Icons.timelapse_sharp),
-      //               title: const Text('حجوزاتي'),
-      //               onTap: () {},
-      //             ),
-      //           ]),
-      //     ),
-      //     ListTile(
-      //       leading: const Icon(Icons.menu_outlined),
-      //       title: const Text('كل البلاغات'),
-      //       onTap: () {
-      //         Navigator.pushNamed(context, '/reports');
-      //       },
-      //     ),
-      //     ListTile(
-      //       leading: const Icon(Icons.menu_outlined),
-      //       title: const Text(' البلاغات المقبولة '),
-      //       onTap: () {
-      //         Navigator.pushNamed(context, '/Accept Reports');
-      //       },
-      //     ),
-      //   ]),
-      // ),
     );
   }
 }
