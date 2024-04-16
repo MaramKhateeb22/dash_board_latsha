@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dash_board_mopidati/screens/Reverse/Reverse.dart';
 
 //All
 Future<QuerySnapshot<Map<String, dynamic>>?>? initDataReverse() async {

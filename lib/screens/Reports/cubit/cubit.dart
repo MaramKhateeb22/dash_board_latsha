@@ -12,7 +12,7 @@ class ReportCubit extends Cubit<ReportState> {
     String resp = "Some Error Occurred";
     try {
       emit(ReportRejectLoadingState());
-      statusReport statusReject = statusReport.reject;
+      // statusReport statusReject = statusReport.reject;
       int statusIndex = statusReport.reject.index;
       await FirebaseFirestore.instance
           .collection("Reports")
@@ -32,7 +32,7 @@ class ReportCubit extends Cubit<ReportState> {
     String resp = "Some Error Occurred";
     try {
       emit(ReportAcceptLoadingState());
-      statusReport statusAccept = statusReport.accept;
+      // statusReport statusAccept = statusReport.accept;
       int statusIndex = statusReport.accept.index;
       await FirebaseFirestore.instance
           .collection("Reports")

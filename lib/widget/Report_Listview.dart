@@ -41,6 +41,8 @@ class ReportListView extends StatelessWidget {
           }
           if (state is ReportAcceptScuccessState) {
             message(context, ' تم قبول البلاغ بنجاح');
+            // FirebaseMessagingService()
+            //     .sendNotification("تم القبول", "تهانينا، تم قبول التقرير!");
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
@@ -222,9 +224,6 @@ class ReportListView extends StatelessWidget {
                                             // backgroundColors: Colors.grey,
                                             icon: Icons.check,
                                             onPressed: () {
-                                              // onPressedAccept;
-
-                                              // setState(() {});
                                               context
                                                   .read<ReportCubit>()
                                                   .acceptReport(

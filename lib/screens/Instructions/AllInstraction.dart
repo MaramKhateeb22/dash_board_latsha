@@ -1,5 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dash_board_mopidati/screens/Instructions/NewInstraction.dart';
+import 'package:dash_board_mopidati/screens/Instructions/add/NewInstraction.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:dash_board_mopidati/widget/my_Text.dart';
@@ -14,7 +16,10 @@ class AllInsractions extends StatefulWidget {
 
 class _AllInsractionsState extends State<AllInsractions> {
   Future<QuerySnapshot<Map<String, dynamic>>> initInstraction() async {
-    return await FirebaseFirestore.instance.collection("Instractions").get();
+    return await FirebaseFirestore.instance
+        .collection("Instractions")
+        .orderBy('createdAt', descending: true)
+        .get();
   }
 
   Future<void> deleteInstraction(String instractiontId) async {
@@ -113,14 +118,26 @@ class _AllInsractionsState extends State<AllInsractions> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ButtonWidget(
-                                side: const BorderSide(
-                                    color: pendingColor,
-                                    style: BorderStyle.solid),
-                                icon: Icons.edit,
-                                colorIcon: pendingColor,
-                                colorText: pendingColor,
-                                child: "تعديل  ",
-                                onPressed: () {}),
+                              side: const BorderSide(
+                                  color: pendingColor,
+                                  style: BorderStyle.solid),
+                              icon: Icons.edit,
+                              colorIcon: pendingColor,
+                              colorText: pendingColor,
+                              child: "تعديل  ",
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/EditInstarctionScreen',
+                                  arguments: [
+                                    '${snap.data!.docs[index].data()["id"]}',
+                                    '${snap.data!.docs[index].data()["Adress"]}',
+                                    '${snap.data!.docs[index].data()["Details Instraction"]}'
+                                  ],
+                                );
+                                print('${snap.data!.docs[index].data()["id"]}');
+                              },
+                            ),
                             const SizedBox(
                               width: 15,
                             ),
@@ -152,16 +169,17 @@ class _AllInsractionsState extends State<AllInsractions> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
         child: ButtonWidget(
-            backgroundColors: cardbackground,
-            widthFactor: 1,
-            child: 'إضافة إرشاد',
-            icon: Icons.addchart_outlined,
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                    builder: (context) => const NewInstarctionScreen()),
-              );
-            }),
+          backgroundColors: cardbackground,
+          widthFactor: 1,
+          child: 'إضافة إرشاد',
+          icon: Icons.addchart_outlined,
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                  builder: (context) => const NewInstarctionScreen()),
+            );
+          },
+        ),
       ),
     );
   }

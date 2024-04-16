@@ -9,7 +9,9 @@ class TextFormFieldWidget extends StatelessWidget {
       this.obscureText = false,
       this.validator,
       required this.keyboardType,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.height = 0.3,
+      this.maxLines});
   TextEditingController yourController;
   String hintText;
   Function(String)? onChanged;
@@ -17,12 +19,15 @@ class TextFormFieldWidget extends StatelessWidget {
   bool obscureText;
   TextInputType keyboardType;
   Widget? suffixIcon;
+  double? height;
+  int? maxLines;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       keyboardType: keyboardType,
       textInputAction: TextInputAction.next,
-      style: const TextStyle(height: 0.3),
+      style: TextStyle(height: height),
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         border: const OutlineInputBorder(),

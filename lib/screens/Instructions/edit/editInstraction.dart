@@ -1,5 +1,5 @@
-import 'package:dash_board_mopidati/screens/Instructions/cubit/cubit.dart';
-import 'package:dash_board_mopidati/screens/Instructions/cubit/state.dart';
+import 'package:dash_board_mopidati/screens/Instructions/edit/cubit/cubit.dart';
+import 'package:dash_board_mopidati/screens/Instructions/edit/cubit/state.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:dash_board_mopidati/widget/text_form_field.dart';
@@ -7,26 +7,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 
-class NewInstarctionScreen extends StatefulWidget {
-  const NewInstarctionScreen({super.key});
+class EditInstarctionScreen extends StatefulWidget {
+  const EditInstarctionScreen({super.key});
 
   @override
-  State<NewInstarctionScreen> createState() => _NewInstarctionScreenState();
+  State<EditInstarctionScreen> createState() => _EditInstarctionScreenState();
 }
 
-class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
+class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
   // String? _selectedValue;
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)?.settings.arguments as List?;
+    // String? receivedId;
+    // String? receivedAddress;
+    // String? receivedDetails;
+
     return BlocProvider(
-      create: (context) => AddInstractionCubit(),
-      child: BlocConsumer<AddInstractionCubit, AddInstractionState>(
+      create: (context) => EditInstractionCubit(),
+      child: BlocConsumer<EditInstractionCubit, EditInstractionState>(
         listener: (context, state) {
-          if (state is AddInstractionSuccessState) {
+          if (state is EditInstractionSuccessState) {
             Navigator.pushNamed(context, '/AllInsractions');
-            message(context, 'تم إرسال الارشاد  بنجاح');
+            message(context, 'تم تعديل الارشاد  بنجاح');
             FlutterToastr.show(
-              ' تم إرسال الأرشاد  بنجاح ',
+              ' تم تعديل  الأرشاد  بنجاح ',
               context,
               position: FlutterToastr.bottom,
               duration: FlutterToastr.lengthLong,
@@ -36,8 +41,32 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
           }
         },
         builder: (context, state) {
+          // String receivedAddress = arguments[1];
+          // var receivedAddress = context
+          //     .read<EditInstractionCubit>()
+          //     .adresseditController = arguments![1];
+          // // String receivedDetails = arguments[2];
+          // var receivedDetails = context
+          //     .read<EditInstractionCubit>()
+          //     .detailseditController = arguments[2];
+          // if (arguments.length >= 3) {
+          //   String receivedId = arguments[0];
+
+          //   // String receivedAddress = arguments[1];
+          // String receivedAddress
+          // =
+          context.read<EditInstractionCubit>().adresseditController.text =
+              arguments![1];
+          // String receivedDetails = arguments[2];
+          // String receivedDetails =
+          context.read<EditInstractionCubit>().detailseditController.text =
+              arguments[2];
+          // }
+
           return Scaffold(
-            appBar: AppBar(title: const Text('إضافة إرشاد')),
+            appBar: AppBar(
+              title: const Text('تعديل الإرشاد'),
+            ),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -46,10 +75,10 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                     Center(
                       child: Stack(
                         children: [
-                          context.read<AddInstractionCubit>().image != null
+                          context.read<EditInstractionCubit>().image != null
                               ? SizedBox(
                                   child: Image.memory(
-                                    context.read<AddInstractionCubit>().image!,
+                                    context.read<EditInstractionCubit>().image!,
                                     fit: BoxFit.cover,
                                   ),
                                 )
@@ -63,7 +92,7 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                                   child: TextButton(
                                     onPressed: () {
                                       context
-                                          .read<AddInstractionCubit>()
+                                          .read<EditInstractionCubit>()
                                           .selectImage(context);
                                     },
                                     child: const Text(
@@ -81,14 +110,16 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                       height: 10,
                     ),
                     Form(
-                      key: context.read<AddInstractionCubit>().formkey,
+                      key: context.read<EditInstractionCubit>().formkey,
                       child: Column(
                         children: [
                           TextFormFieldWidget(
+                              height: 1,
+                              maxLines: null,
                               yourController: context
-                                  .read<AddInstractionCubit>()
-                                  .adressController,
-                              hintText: 'أدخل عنوان الارشاد  ',
+                                  .read<EditInstractionCubit>()
+                                  .adresseditController,
+                              hintText: 'تعديل عنوان الارشاد  ',
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'هذا الحقل مطلوب';
@@ -100,15 +131,15 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                           ),
                           TextFormField(
                             controller: context
-                                .read<AddInstractionCubit>()
-                                .detailsController,
+                                .read<EditInstractionCubit>()
+                                .detailseditController,
                             keyboardType: TextInputType.multiline,
                             // style: const TextStyle(height: 0.2),
                             maxLines: null, // عدد الخطوط غير محدود
                             decoration: const InputDecoration(
                               labelText:
                                   ' أدخل تفاصيل الارشاد', // يمكنك تغيير النص هنا
-                              hintText: 'ادخل  التفاصيل...',
+                              hintText: 'تعديل  التفاصيل...',
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -126,34 +157,38 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        state is AddInstractionLoadingState
+                        state is EditInstractionLoadingState
                             ? const Center(
                                 child: CircularProgressIndicator(),
                               )
                             : ButtonWidget(
                                 icon: Icons.telegram,
-                                child: ' إرسال',
+                                child: ' تعديل',
                                 // widthFactor: 0.34,
                                 onPressed: () {
-                                  context.read<AddInstractionCubit>().image ==
+                                  context.read<EditInstractionCubit>().image ==
                                           null
                                       ? message(context,
                                           ' أرفع صورة للتوضيح من فضلك قبل الارسال')
                                       : null;
                                   // احفظ البيانات باستخدام Cubit
                                   context
-                                      .read<AddInstractionCubit>()
-                                      .saveData(context);
-                                }),
+                                      .read<EditInstractionCubit>()
+                                      .editInstractionSaveData(
+                                          context, arguments[0]);
+                                  // print(arguments);
+                                },
+                              ),
                         const SizedBox(
                           width: 20,
                         ),
                         ButtonWidget(
-                            icon: Icons.delete,
-                            child: 'مسح الفورم',
-                            onPressed: () {
-                              context.read<AddInstractionCubit>().clearForm();
-                            }),
+                          icon: Icons.delete,
+                          child: 'مسح الفورم',
+                          onPressed: () {
+                            context.read<EditInstractionCubit>().clearForm();
+                          },
+                        ),
                       ],
                     ),
                   ],

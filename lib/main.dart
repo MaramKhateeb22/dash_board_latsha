@@ -1,5 +1,9 @@
+import 'package:dash_board_mopidati/screens/Insects/add/AddInsects.dart';
+import 'package:dash_board_mopidati/screens/Insects/AllInsects.dart';
+import 'package:dash_board_mopidati/screens/Insects/edit/editInsect.dart';
 import 'package:dash_board_mopidati/screens/Instructions/AllInstraction.dart';
-import 'package:dash_board_mopidati/screens/Instructions/NewInstraction.dart';
+import 'package:dash_board_mopidati/screens/Instructions/add/NewInstraction.dart';
+import 'package:dash_board_mopidati/screens/Instructions/edit/editInstraction.dart';
 import 'package:dash_board_mopidati/screens/Reports/AcceptReports.dart';
 import 'package:dash_board_mopidati/screens/Reports/ItemReport.dart';
 import 'package:dash_board_mopidati/screens/Reports/RejectsReports.dart';
@@ -108,7 +112,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         //Reports
         '/reports': (context) => const ReportsScreen(),
-        // '/reports': (context) => UsersList(),
         '/Accept Reports': (context) => const AcceptReportScreen(),
         '/Reject Reports': (context) => const RejectReportScreen(),
         '/Pending Reports': (context) => const PendingReportScreen(),
@@ -124,8 +127,14 @@ class MyApp extends StatelessWidget {
 
         //instraction
         '/NewInstarctionScreen': (context) => const NewInstarctionScreen(),
+        '/EditInstarctionScreen': (context) => const EditInstarctionScreen(),
         '/AllInsractions': (context) => const AllInsractions(),
         '/AllUsers': (context) => const AllUsers(),
+
+        //insects price
+        '/add_insect': (context) => const AddInsectsScreen(),
+        '/all_price': (context) => const AllInsectPriceScreen(),
+        '/edit_insect': (context) => const EditInsectScreen(),
       },
     );
   }

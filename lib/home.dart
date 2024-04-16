@@ -27,18 +27,27 @@ class HomeScreen extends StatelessWidget {
                   // color: Colors.blue,
                   ),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ListTile(
-                  //   title: const Text(" جميع الارشادات"),
-                  //   onTap: () {
-                  //     Navigator.pushNamed(context, '/AllInsractions');
-                  //   },
-                  // ),
                   ListTile(
                     leading: const Icon(Icons.people_alt_sharp),
                     title: const Text("عملاؤنا"),
                     onTap: () {
                       Navigator.pushNamed(context, '/AllUsers');
+                    },
+                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.price_change),
+                  //   title: const Text(" إضافة السعر "),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(context, '/add_insects');
+                  //   },
+                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.price_change),
+                    title: const Text(" كل الاسعار  "),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/all_price');
                     },
                   ),
                 ],
