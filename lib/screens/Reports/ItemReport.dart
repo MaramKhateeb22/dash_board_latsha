@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemeReport extends StatefulWidget {
   const ItemeReport({super.key});
@@ -76,6 +77,44 @@ class _ItemeReportState extends State<ItemeReport> {
                             width: 10,
                           ),
                           Text(snapshot.data!.first),
+                        ],
+                      );
+                    } else {
+                      return const Text('لا يوجد بيانات للعرض');
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FutureBuilder<List<String>>(
+                  future: displayUserPhone(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      return Row(
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: getStatusColor(statusReport),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              final Uri phoneUri = Uri(
+                                scheme: 'tel',
+                                path:
+                                    snapshot.data!.first, // أضف رقم الهاتف هنا
+                              );
+                              launch(phoneUri.toString());
+                            },
+                            child: Text(snapshot.data!.first),
+                          ),
                         ],
                       );
                     } else {
@@ -199,7 +238,7 @@ class _ItemeReportState extends State<ItemeReport> {
                     colorText: Colors.grey,
                     icon: Icons.add_location,
                     colorIcon: Colors.grey,
-                    widthFactor: 0.65,
+                    widthFactor: 0.7,
                     onPressed: () async {
                       double latitude = 37.094722;
                       double longitude = 36.203842;

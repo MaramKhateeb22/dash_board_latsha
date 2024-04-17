@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dash_board_mopidati/screens/Reverse/AcceptReverse.dart';
 import 'package:dash_board_mopidati/screens/Reverse/DoneReverese.dart';
 import 'package:dash_board_mopidati/screens/Reverse/RejectsReverse.dart';
@@ -7,25 +9,54 @@ import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 
 class ReverseListView extends StatelessWidget {
-  final AsyncSnapshot snap;
-  // final AsyncSnapshot? snapshot;
-  // Function(int index, AsyncSnapshot snapshot)? onPressedAccept;
-  // Function(int index, AsyncSnapshot snapshot)? onPressedReject;
+  static Future<bool> sendFcmMessage(String title, String message) async {
+    try {
+      var url = 'https://fcm.googleapis.com/fcm/send';
+      var header = {
+        "Content-Type": "application/json",
+        "Authorization":
+            "key=AAAA6nF344s:APA91bEtlMhAQEo-7aOmGe04ZNCWs07vfpmLQn9fS9VAcb4G7uz0bMIJq8WtFfbYVMUViEHmZ4UrWs9seWJIztbl2NIXdeYxVtvnM3SH3jcoLCQS9ELGOmxJYgPO6R8yuwSpjNR111q9",
+      };
+      var request = {
+        "notification": {
+          "title": title,
+          "text": message,
+          "sound": "default",
+          "color": "#990000",
+        },
+        "priority": "high",
+        // "to": "/topics/all",
+        "to":
+            "fZhnNsqkQfGiJOj2mSY21r:APA91bFTOtFkiAp3XbX8Rvyye9_Rj9bHq6IBpsQ7M56z4SPo9S0gBSrsYj7CBwRq-YTK0tuNbGxIGyTy0jMjqO5ZGorsnl0Nyw2AOKj8QgSG_CvTJ4fv-Egzlv6ckTJ__TtJwXdOTccc",
+      };
+      var client = Client();
+      var response = await client.post(
+        Uri.parse(url),
+        headers: header,
+        body: json.encode(request),
+      );
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
-  // FutureBuilder futureBuilder;
+  final AsyncSnapshot snap;
   final FutureBuilder Function(int index)
       futureBuilder; // توقيع الدالة التي تقبل int وترجع FutureBuilder.
-  // final int index; // ال
+  // final FutureBuilder Function(int index)
+  // futureBuildernumber; // توقيع الدالة التي تقبل int وترجع FutureBuilder.
   const ReverseListView({
-    // this.snapshot,
     super.key,
     required this.snap,
     required this.futureBuilder,
-    // this.onPressedAccept,
-    // this.onPressedReject,
+    // required this.futureBuildernumber,
   });
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -34,6 +65,7 @@ class ReverseListView extends StatelessWidget {
         listener: (context, state) {
           if (state is ReverseRejectSuccessState) {
             message(context, 'تم رفض الحجز بنجاح');
+            sendFcmMessage('تم رفض الحجز', 'عذرا تم الرفض!');
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
@@ -43,6 +75,7 @@ class ReverseListView extends StatelessWidget {
           }
           if (state is ReverseAcceptScuccessState) {
             message(context, ' تم قبول الحجز بنجاح');
+            sendFcmMessage('تهانينا! تم قبول الحجز', 'تم القبول✔');
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
@@ -50,9 +83,9 @@ class ReverseListView extends StatelessWidget {
               ),
             );
           }
-
           if (state is ReverseDoneSuccessState) {
             message(context, ' تم الرش ');
+            sendFcmMessage('تم الرش ✔', 'شكرا لكم !');
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
@@ -63,22 +96,26 @@ class ReverseListView extends StatelessWidget {
         },
         builder: (context, state) {
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             itemCount: snap.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/Iteme Reverse', arguments: [
-                    snap.data!.docs[index]['Adress'],
-                    snap.data!.docs[index]['Type Insect'],
-                    snap.data!.docs[index]['imageLink'],
-                    snap.data!.docs[index]['idUser'],
-                    snap.data!.docs[index]['id'],
-                    snap.data!.docs[index]['createdAt'],
-                    snap.data!.docs[index]['location'],
-                    snap.data!.docs[index]['space'],
-                    snap.data!.docs[index]['statusReverse'],
-                  ]);
+                  Navigator.pushNamed(
+                    context,
+                    '/Iteme Reverse',
+                    arguments: [
+                      snap.data!.docs[index]['Adress'],
+                      snap.data!.docs[index]['Type Insect'],
+                      snap.data!.docs[index]['imageLink'],
+                      snap.data!.docs[index]['idUser'],
+                      snap.data!.docs[index]['id'],
+                      snap.data!.docs[index]['createdAt'],
+                      snap.data!.docs[index]['location'],
+                      snap.data!.docs[index]['space'],
+                      snap.data!.docs[index]['statusReverse'],
+                    ],
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -120,6 +157,11 @@ class ReverseListView extends StatelessWidget {
                                       const EdgeInsets.symmetric(vertical: 0),
                                   child: futureBuilder(index),
                                 ),
+                                // Padding(
+                                //   padding:
+                                //       const EdgeInsets.symmetric(vertical: 0),
+                                //   child: futureBuildernumber(index),
+                                // ),
                                 Row(
                                   children: [
                                     Icon(Icons.bug_report,

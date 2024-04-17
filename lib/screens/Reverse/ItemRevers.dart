@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_board_mopidati/screens/Reports/functionReport.dart';
+import 'package:dash_board_mopidati/screens/Reverse/function.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItemeReverse extends StatefulWidget {
   const ItemeReverse({super.key});
@@ -51,7 +53,7 @@ class _ItemeReverseState extends State<ItemeReverse> {
                   // height: 200,
                   child: Image.network(
                       width: double.infinity,
-                      height: 400,
+                      height: 300,
                       fit: BoxFit.cover,
                       imageLink),
                 ),
@@ -76,6 +78,44 @@ class _ItemeReverseState extends State<ItemeReverse> {
                             width: 10,
                           ),
                           Text(snapshot.data!.first),
+                        ],
+                      );
+                    } else {
+                      return const Text('لا يوجد بيانات للعرض');
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FutureBuilder<List<String>>(
+                  future: displayUserPhoneReverse(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else if (snapshot.hasData) {
+                      return Row(
+                        children: [
+                          Icon(
+                            Icons.call,
+                            color: getStatusReverseColor(statusReverse),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              final Uri phoneUri = Uri(
+                                scheme: 'tel',
+                                path:
+                                    snapshot.data!.first, // أضف رقم الهاتف هنا
+                              );
+                              launch(phoneUri.toString());
+                            },
+                            child: Text(snapshot.data!.first),
+                          ),
                         ],
                       );
                     } else {
@@ -244,7 +284,7 @@ class _ItemeReverseState extends State<ItemeReverse> {
                     colorText: Colors.grey,
                     icon: Icons.add_location,
                     colorIcon: Colors.grey,
-                    widthFactor: 0.65,
+                    widthFactor: 0.7,
                     onPressed: () async {
                       double latitude = 37.094722;
                       double longitude = 36.203842;

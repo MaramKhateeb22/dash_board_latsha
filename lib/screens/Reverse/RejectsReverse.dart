@@ -30,6 +30,26 @@ class _RejectReverseScreenState extends State<RejectReverseScreen> {
               print('empty data');
               return const Text("لا يوجد بيانات لعرضها  ");
             }
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.report,
+                      size: 60,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(" لايوجد حجوزات مرفوضة "),
+                  ],
+                ),
+              );
+            }
             return ReverseListView(
               snap: snap,
               futureBuilder: (index) {
@@ -40,10 +60,16 @@ class _RejectReverseScreenState extends State<RejectReverseScreen> {
                       return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
+                    } else if (snap.data?.docs.isEmpty ?? false) {
+                      print('empty data');
+                      return const Text(" لا يوجد بيانات للعرض ");
                     } else if (snapshot.hasData) {
                       return Row(
                         children: [
                           const Icon(Icons.person, color: rejectColor),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           Text('${snapshot.data![index]}'),
                         ],
                       );

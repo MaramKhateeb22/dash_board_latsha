@@ -18,6 +18,25 @@ class HomeScreen extends StatelessWidget {
           icon: const Icon(Icons.menu),
         ),
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/syria.png'),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                scaffoldKey.currentState?.openDrawer();
+              },
+              child: const Text(
+                'هل من جديد؟!',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+            ),
+          ],
+        ),
+      ),
       drawer: Drawer(
         backgroundColor: backgroundColor,
         child: ListView(
@@ -135,8 +154,11 @@ class HomeScreen extends StatelessWidget {
             ),
 
             ExpansionTile(
+              textColor: Colors.grey,
+              iconColor: Colors.grey,
               initiallyExpanded: true,
               title: const Text("الارشادات"),
+              leading: const Icon(Icons.edit_document),
               children: <Widget>[
                 ListTile(
                   leading: const Icon(Icons.edit_document),

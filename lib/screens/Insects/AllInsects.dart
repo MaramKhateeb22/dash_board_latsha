@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_board_mopidati/screens/Insects/add/AddInsects.dart';
+import 'package:dash_board_mopidati/screens/Insects/edit/editInsect.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class _AllInsectPriceScreenState extends State<AllInsectPriceScreen> {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                 child: Card(
+                  color: backgroundColor,
                   child: Column(
                     children: [
                       Padding(
@@ -65,18 +67,27 @@ class _AllInsectPriceScreenState extends State<AllInsectPriceScreen> {
                                 Row(
                                   children: [
                                     const Icon(Icons.bug_report),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
                                     Text('${snap.data!.docs[index]['name']}'),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     const Icon(Icons.money),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
                                     Text('${snap.data!.docs[index]['price']}'
                                         'ل.س'
                                         ' لل كم '),
                                   ],
                                 )
                               ],
+                            ),
+                            const SizedBox(
+                              height: 15,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -86,19 +97,34 @@ class _AllInsectPriceScreenState extends State<AllInsectPriceScreen> {
                                       style: BorderStyle.solid,
                                       color: Colors.orange),
                                   child: 'تعديل',
-                                  icon: Icons.delete,
+                                  icon: Icons.edit,
                                   colorIcon: Colors.orange,
                                   colorText: Colors.orange,
-                                  onPressed: () {
-                                    Navigator.pushNamed(
+                                  onPressed: () async {
+                                    Navigator.push(
                                       context,
-                                      '/edit_insect',
-                                      arguments: [
-                                        '${snap.data!.docs[index].data()["id"]}',
-                                        '${snap.data!.docs[index].data()["name"]}',
-                                        '${snap.data!.docs[index].data()["price"]}',
-                                      ],
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const EditInsectScreen(),
+                                          settings: RouteSettings(
+                                            arguments: [
+                                              '${snap.data!.docs[index].data()["id"]}',
+                                              '${snap.data!.docs[index].data()["name"]}',
+                                              '${snap.data!.docs[index].data()["price"]}',
+                                            ],
+                                          )
+                                          // settings: RouteSettings(arguments: selectedPoint),
+                                          ),
                                     );
+                                    // await Navigator.pushNamed(
+                                    //   context,
+                                    //   '/edit_insect',
+                                    //   arguments: [
+                                    //     '${snap.data!.docs[index].data()["id"]}',
+                                    //     '${snap.data!.docs[index].data()["name"]}',
+                                    //     '${snap.data!.docs[index].data()["price"]}',
+                                    //   ],
+                                    // );
                                   },
                                 ),
                                 ButtonWidget(

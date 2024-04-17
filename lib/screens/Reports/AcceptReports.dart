@@ -27,6 +27,26 @@ class _AcceptReportScreenState extends State<AcceptReportScreen> {
               print('empty data');
               return const Text("Empty data");
             }
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.report,
+                      size: 60,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(" لايوجد بلاغات مقبولة "),
+                  ],
+                ),
+              );
+            }
             return ReportListView(
               snap: snap,
               futureBuilder: (index) {
@@ -43,6 +63,9 @@ class _AcceptReportScreenState extends State<AcceptReportScreen> {
                           const Icon(
                             Icons.person,
                             color: Colors.green,
+                          ),
+                          SizedBox(
+                            width: 5,
                           ),
                           Text(' ${snapshot.data![index]}'),
                         ],

@@ -18,100 +18,95 @@ class _PendingReverseScreenState extends State<PendingReverseScreen> {
         title: const Text(' الحجوزات المنتظرة'),
       ),
       body: FutureBuilder(
-          future: initDataPendingReverse(),
-          builder: (context, snap) {
-            if (snap.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snap.hasError) return const Text("Something has error");
-            // if (snap.data == null) {
-            //   print('empty data');
-            //   // return const Text("Empty data");
-            //   return const Text('لايوجد بلاغات قيد الانتظار');
-            // }
-            if (snap.data == null) {
-              const Center(child: Text('لا يوجد بيانات للعرض'));
-              print('لايوجد حجوزات منتظرة');
-              message(context, 'لا يوجد حجوزات منتظرة');
-            }
-            return ReverseListView(
-              snap: snap,
-              futureBuilder: (index) {
-             
-                return FutureBuilder(
-                  future: displayUserNamesPendingReverse(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
-                      return Row(
-                        children: [
-                          const Icon(Icons.person, color: pendingColor),
-                          Text('${snapshot.data![index]}'),
-                        ],
-                      );
-                    } else {
-                      return const Text('لا يوجد بيانات للعرض');
-                    }
-                  },
-                );
-              },
+        future: initDataPendingReverse(),
+        builder: (context, snap) {
+          if (snap.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snap.hasError) return const Text("Something has error");
+          if (snap.data?.docs.isEmpty ?? false) {
+            print('empty data');
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.report,
+                    size: 60,
+                    color: Colors.yellow,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(" لايوجد حجوزات قيد الانتظار"),
+                ],
+              ),
             );
-            // return ListView.builder(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   itemCount: snap.data?.docs.length ?? 0,
-            //   itemBuilder: (context, index) {
-            //     return Card(
-            //       margin: const EdgeInsets.symmetric(vertical: 4),
-            //       child: Padding(
-            //         padding: const EdgeInsets.all(8.0),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             Column(
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   FutureBuilder<List<String>>(
-            //                     future: displayUserNamesPendingReverse(),
-            //                     builder: (context, snapshot) {
-            //                       if (snapshot.connectionState ==
-            //                           ConnectionState.waiting) {
-            //                         return const CircularProgressIndicator();
-            //                       } else if (snapshot.hasError) {
-            //                         return Text('Error: ${snapshot.error}');
-            //                       } else if (snapshot.hasData) {
-            //                         return Text(
-            //                             'اسم المستخدم: ${snapshot.data![index]}');
-            //                       } else {
-            //                         return const Text('No data available');
-            //                       }
-            //                     },
-            //                   ),
-            //                   Text(
-            //                     "نوع الحشرة: ${snap.data!.docs[index].data()["Type Insect"]}",
-            //                     // style: Theme.of(context).textTheme.titleMedium,
-            //                   ),
-            //                   Text(
-            //                     "عنوان المكان الذي نتنشر فيه الحشرة \n: ${snap.data!.docs[index].data()["Adress"]}",
-            //                     // style: Theme.of(context).textTheme.titleMedium,
-            //                   ),
-            //                   const Row(
-            //                     children: [
-            //                       Icon(Icons.timelapse_outlined),
-            //                       Text('في انتظار قبول البلاغ'),
-            //                     ],
-            //                   )
-            //                 ]),
-            //           ],
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // );
-          }),
+          }
+          if (snap.data == null) {
+            return const Center(
+              child: Text('لايوجد بلاغات قيد الانتظار'),
+            );
+          }
+          if (snap.data?.docs.isEmpty ?? false) {
+            print('empty data');
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.report,
+                    size: 60,
+                    color: Colors.yellow,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(" لايوجد حجوزات قيد الانتظار"),
+                ],
+              ),
+            );
+          }
+          return ReverseListView(
+            snap: snap,
+            futureBuilder: (index) {
+              return FutureBuilder(
+                future: displayUserNamesPendingReverse(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  }
+
+                  if (snap.data?.docs.isEmpty ?? false) {
+                    print('empty data');
+                    return const Text('لا يوجد اسم');
+                  }
+
+                  if (snapshot.hasData) {
+                    return Row(
+                      children: [
+                        const Icon(Icons.person, color: pendingColor),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('${snapshot.data![index]}'),
+                      ],
+                    );
+                  } else {
+                    return const Text('لا يوجد بيانات للعرض');
+                  }
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

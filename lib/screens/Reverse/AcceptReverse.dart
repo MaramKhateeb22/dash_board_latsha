@@ -15,7 +15,7 @@ class _AcceptReverseScreenState extends State<AcceptReverseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' الحجوزات المفبولة'),
+        title: const Text(' الحجوزات المقبولة'),
       ),
       body: FutureBuilder(
           future: initDataAcceptReveres(),
@@ -28,6 +28,36 @@ class _AcceptReverseScreenState extends State<AcceptReverseScreen> {
               print('empty data');
               return const Text("Empty data");
             }
+            if (snap.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snap.hasError) return const Text("Something has error");
+            if (snap.data == null) {
+              return const Center(
+                child: Text('لايوجد بلاغات قيد الانتظار'),
+              );
+            }
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.report,
+                      size: 60,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(" لايوجد حجوزات مقبولة "),
+                  ],
+                ),
+              );
+            }
+
             return ReverseListView(
               snap: snap,
               futureBuilder: (index) {
@@ -42,6 +72,9 @@ class _AcceptReverseScreenState extends State<AcceptReverseScreen> {
                       return Row(
                         children: [
                           const Icon(Icons.person, color: acceptColor),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           Text('${snapshot.data![index]}'),
                         ],
                       );

@@ -50,21 +50,14 @@ class _AllInsractionsState extends State<AllInsractions> {
             return const Text("لم يتم إضافة إرشادات ");
           }
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             itemCount: snap.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 0.0, vertical: 10),
                 child: Card(
-                  // shadowColor: Colors.grey,
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius: BorderRadius.circular(15.0),
-                  // ),
-                  // // clipBehavior: Clip.antiAlias,
-                  // color: cardbackground,
-                  // elevation: 10,
-                  // margin: const EdgeInsets.all(4),
+                  color: backgroundColor,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -79,9 +72,11 @@ class _AllInsractionsState extends State<AllInsractions> {
                                 // color: cardbackground,
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              width: 130,
-                              height: 130,
+                              // width: 130,
+                              // height: 130,
                               child: Image.network(
+                                  width: 120,
+                                  height: 150,
                                   fit: BoxFit.cover,
                                   "${snap.data!.docs[index].data()["imageLink"]}"),
                             ),
@@ -94,13 +89,17 @@ class _AllInsractionsState extends State<AllInsractions> {
                               children: [
                                 CustomInkWell(
                                   style: const TextStyle(
-                                      height: 1.2, fontSize: 23, color: pColor),
+                                    height: 1.2,
+                                    fontSize: 23,
+                                    color: pColor,
+                                  ),
                                   // maxLines: 3,
                                   snap: snap,
                                   index: index,
                                   adress: 'Adress',
                                 ),
                                 CustomInkWell(
+                                  maxLines: 3,
                                   snap: snap,
                                   adress: 'Details Instraction',
                                   index: index,
@@ -111,9 +110,9 @@ class _AllInsractionsState extends State<AllInsractions> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -125,14 +124,15 @@ class _AllInsractionsState extends State<AllInsractions> {
                               colorIcon: pendingColor,
                               colorText: pendingColor,
                               child: "تعديل  ",
-                              onPressed: () {
-                                Navigator.pushNamed(
+                              onPressed: () async {
+                                await Navigator.pushNamed(
                                   context,
                                   '/EditInstarctionScreen',
                                   arguments: [
                                     '${snap.data!.docs[index].data()["id"]}',
                                     '${snap.data!.docs[index].data()["Adress"]}',
-                                    '${snap.data!.docs[index].data()["Details Instraction"]}'
+                                    '${snap.data!.docs[index].data()["Details Instraction"]}',
+                                    '${snap.data!.docs[index].data()["imageLink"]}'
                                   ],
                                 );
                                 print('${snap.data!.docs[index].data()["id"]}');
@@ -169,6 +169,7 @@ class _AllInsractionsState extends State<AllInsractions> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
         child: ButtonWidget(
+          side: const BorderSide(color: pColor),
           backgroundColors: cardbackground,
           widthFactor: 1,
           child: 'إضافة إرشاد',

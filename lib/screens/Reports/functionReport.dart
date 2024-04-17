@@ -48,6 +48,27 @@ Future<List<String>> displayUserNames() async {
   return userNames;
 }
 
+Future<List<String>> displayUserPhone() async {
+  List<String> userNames = [];
+
+  QuerySnapshot<Map<String, dynamic>> reportsSnapshot =
+      await FirebaseFirestore.instance.collection("Reports").get();
+
+  for (var report in reportsSnapshot.docs) {
+    var userId = report.data()["idUser"];
+
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance.collection("users").doc(userId).get();
+
+    if (userSnapshot.exists) {
+      var userName = userSnapshot.data()!["numberphone"];
+      userNames.add(userName);
+    }
+  }
+
+  return userNames;
+}
+
 //Accept
 Future<QuerySnapshot<Map<String, dynamic>>?>? initDataAccept() async {
   QuerySnapshot<Map<String, dynamic>> reportsSnapshot =

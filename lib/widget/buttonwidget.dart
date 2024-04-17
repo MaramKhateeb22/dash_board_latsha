@@ -12,6 +12,7 @@ class ButtonWidget extends StatelessWidget {
     this.colorText,
     this.colorIcon,
     this.side = BorderSide.none,
+    this.elevation = 5,
   });
   var child;
   VoidCallback onPressed;
@@ -20,6 +21,7 @@ class ButtonWidget extends StatelessWidget {
   Color? backgroundColors = backgroundColor;
   Color? colorText;
   Color? colorIcon;
+  double? elevation;
   BorderSide side;
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,8 @@ class ButtonWidget extends StatelessWidget {
         ),
 
         color: backgroundColors,
-        elevation: 2,
+        elevation: elevation,
+
         textColor: pColor,
         // style: ButtonStyle(
         //   // shape: const MaterialStatePropertyAll(),

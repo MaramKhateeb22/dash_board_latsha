@@ -27,14 +27,43 @@ class _RejectReportScreenState extends State<RejectReportScreen> {
               print('empty data');
               return const Text("Empty data");
             }
+            // if (snap.data?.docs.isEmpty ?? false) {
+            //   print('empty data');
+            //   return const Text(" لا يوجد بيانات للعرض ");
+            // }
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.report,
+                      size: 60,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(" لايوجد بلاغات مرفوضة "),
+                  ],
+                ),
+              );
+            }
             return ReportListView(
               snap: snap,
               futureBuilder: (index) {
+                print("hiiiiiii");
                 return FutureBuilder(
                   future: displayUserNamesReject(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
+                    }
+                    if (snap.data == null) {
+                      print('empty data');
+                      return const Text("Empty data");
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (snapshot.hasData) {
@@ -43,6 +72,9 @@ class _RejectReportScreenState extends State<RejectReportScreen> {
                           const Icon(
                             Icons.person,
                             color: Colors.red,
+                          ),
+                          SizedBox(
+                            width: 5,
                           ),
                           Text(' ${snapshot.data![index]}'),
                         ],

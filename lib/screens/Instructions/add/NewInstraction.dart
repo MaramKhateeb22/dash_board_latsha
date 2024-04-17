@@ -24,12 +24,12 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
       child: BlocConsumer<AddInstractionCubit, AddInstractionState>(
         listener: (context, state) {
           if (state is AddInstractionSuccessState) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) =>
-                    const AllInsractions(), // استبدل بالشاشة التي تريد الانتقال إليها
-              ),
-            );
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         const AllInsractions(), // استبدل بالشاشة التي تريد الانتقال إليها
+            //   ),
+            // );
             // Navigator.pushNamed(context, '/AllInsractions');
             message(context, 'تم إرسال الارشاد  بنجاح');
             FlutterToastr.show(
@@ -118,6 +118,7 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                               labelText:
                                   ' أدخل تفاصيل الارشاد', // يمكنك تغيير النص هنا
                               hintText: 'ادخل  التفاصيل...',
+                              border: OutlineInputBorder(),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -144,7 +145,7 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                                     style: BorderStyle.solid,
                                     color: Colors.green),
                                 icon: Icons.telegram,
-                                child: ' إرسال',
+                                child: ' حفظ',
                                 // widthFactor: 0.34,
                                 onPressed: () {
                                   context.read<AddInstractionCubit>().image ==
@@ -167,7 +168,7 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                           colorText: Colors.red,
                           side: const BorderSide(
                               style: BorderStyle.solid, color: Colors.red),
-                          child: 'مسح الفورم',
+                          child: 'حذف ',
                           onPressed: () {
                             context.read<AddInstractionCubit>().clearForm();
                           },

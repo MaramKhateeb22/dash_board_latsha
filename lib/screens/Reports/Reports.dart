@@ -52,6 +52,26 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     print('empty data');
                     return const Text("لا يوجد بيانات للعرض ");
                   }
+                  if (snap.data?.docs.isEmpty ?? false) {
+                    print('empty data');
+                    return const Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.report,
+                            size: 60,
+                            color: Colors.yellow,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(" لايوجد   بلاغات"),
+                        ],
+                      ),
+                    );
+                  }
                   return ReportListView(
                     snap: snap,
                     futureBuilder: (index) {
@@ -61,6 +81,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const CircularProgressIndicator();
+                          } else if (snap.data?.docs.isEmpty ?? false) {
+                            print('empty data');
+                            return const Text(" لا يوجد بيانات للعرض ");
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData) {
@@ -75,6 +98,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                               '1'
                                           ? acceptColor
                                           : rejectColor,
+                                ),
+                                const SizedBox(
+                                  width: 5,
                                 ),
                                 Text('${snapshot.data![index]}'),
                               ],

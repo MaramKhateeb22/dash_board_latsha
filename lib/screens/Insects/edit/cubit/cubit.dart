@@ -28,12 +28,13 @@ class EditInsectsCubit extends Cubit<EditInsectState> {
           {
             // 'id': idInsect,
             // 'name': nameInsectEditController.text,
-            'name': nameInsectEditController.text,
             // 'price': priceEditController.text,
+            'name': nameInsectEditController.text,
             'price': priceEditController.text,
             'createdAtEdit': Timestamp.now(),
           },
         );
+        Navigator.pop(context);
         // clearForm();
         emit(EditInsectsSuccessState());
         print("Success submit");

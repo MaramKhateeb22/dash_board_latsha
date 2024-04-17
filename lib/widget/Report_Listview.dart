@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:dash_board_mopidati/screens/Reports/Reports.dart';
 import 'package:dash_board_mopidati/screens/Reports/cubit/cubit.dart';
 import 'package:dash_board_mopidati/screens/Reports/cubit/state.dart';
@@ -5,24 +6,50 @@ import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:dash_board_mopidati/widget/buttonwidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 
 class ReportListView extends StatelessWidget {
-  final AsyncSnapshot snap;
-  // final AsyncSnapshot? snapshot;
-  // Function(int index, AsyncSnapshot snapshot)? onPressedAccept;
-  // Function(int index, AsyncSnapshot snapshot)? onPressedReject;
+  static Future<bool> sendFcmMessage(String title, String message) async {
+    try {
+      var url = 'https://fcm.googleapis.com/fcm/send';
+      var header = {
+        "Content-Type": "application/json",
+        "Authorization":
+            "key=AAAA6nF344s:APA91bEtlMhAQEo-7aOmGe04ZNCWs07vfpmLQn9fS9VAcb4G7uz0bMIJq8WtFfbYVMUViEHmZ4UrWs9seWJIztbl2NIXdeYxVtvnM3SH3jcoLCQS9ELGOmxJYgPO6R8yuwSpjNR111q9",
+      };
+      var request = {
+        "notification": {
+          "title": title,
+          "text": message,
+          "sound": "default",
+          "color": "#990000",
+        },
+        "priority": "high",
+        // "to": "/topics/all",
+        "to":
+            "fZhnNsqkQfGiJOj2mSY21r:APA91bFTOtFkiAp3XbX8Rvyye9_Rj9bHq6IBpsQ7M56z4SPo9S0gBSrsYj7CBwRq-YTK0tuNbGxIGyTy0jMjqO5ZGorsnl0Nyw2AOKj8QgSG_CvTJ4fv-Egzlv6ckTJ__TtJwXdOTccc",
+      };
 
-  // FutureBuilder futureBuilder;
+      var client = Client();
+      var response = await client.post(
+        Uri.parse(url),
+        headers: header,
+        body: json.encode(request),
+      );
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  final AsyncSnapshot snap;
   final FutureBuilder Function(int index)
       futureBuilder; // توقيع الدالة التي تقبل int وترجع FutureBuilder.
-  // final int index; // ال
   const ReportListView({
-    // this.snapshot,
     super.key,
     required this.snap,
     required this.futureBuilder,
-    // this.onPressedAccept,
-    // this.onPressedReject,
   });
   @override
   Widget build(BuildContext context) {
@@ -32,6 +59,7 @@ class ReportListView extends StatelessWidget {
         listener: (context, state) {
           if (state is ReportRejectSuccessState) {
             message(context, 'تم رفض البلاغ بنجاح');
+            sendFcmMessage(" عذرا تم الرفض ", "عذرا تم رفض البلاغ");
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) =>
@@ -41,6 +69,9 @@ class ReportListView extends StatelessWidget {
           }
           if (state is ReportAcceptScuccessState) {
             message(context, ' تم قبول البلاغ بنجاح');
+            sendFcmMessage(
+                "تهانينا، تم قبول البلاغ!", "تهانينا، تم قبول التقرير!");
+
             // FirebaseMessagingService()
             //     .sendNotification("تم القبول", "تهانينا، تم قبول التقرير!");
             Navigator.of(context).pushReplacement(
@@ -53,7 +84,7 @@ class ReportListView extends StatelessWidget {
         },
         builder: (context, state) {
           return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 7),
             itemCount: snap.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
               return InkWell(
@@ -110,6 +141,9 @@ class ReportListView extends StatelessWidget {
                                       const EdgeInsets.symmetric(vertical: 0),
                                   child: futureBuilder(index),
                                 ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
                                 Row(
                                   children: [
                                     Icon(
@@ -126,6 +160,9 @@ class ReportListView extends StatelessWidget {
                                       " ${snap.data!.docs[index].data()["Type Insect"]}",
                                     ),
                                   ],
+                                ),
+                                const SizedBox(
+                                  width: 5,
                                 ),
                                 Row(
                                   children: [

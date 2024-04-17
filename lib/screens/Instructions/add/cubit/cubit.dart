@@ -55,16 +55,9 @@ class AddInstractionCubit extends Cubit<AddInstractionState> {
           'imageLink': imagUrl,
           'createdAt': Timestamp.now(),
         });
+        Navigator.pop(context);
         clearForm();
         emit(AddInstractionSuccessState());
-
-        //بدي أظهر للمستخدم تم الارسال بنجاج هنا
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   '/allCategory', // الصفحة التي ترغب في الانتقال إليها
-        //   ModalRoute.withName(
-        //       '/home'), // '/HomePage' هو اسم المسار للصفحة التي تريد البقاء في المكدس
-        // );
         print("Success submit");
       } else {
         emit(

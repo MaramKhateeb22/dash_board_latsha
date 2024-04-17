@@ -41,22 +41,31 @@ class _PendingReportScreenState extends State<PendingReportScreen> {
                 if (snap.hasError) return const Text("Something has error");
                 if (snap.data == null) {
                   return const Center(
-                      child: Text('لايوجد بلاغات قيد الانتظار'));
+                    child: Text('لايوجد بلاغات قيد الانتظار'),
+                  );
+                }
+                if (snap.data?.docs.isEmpty ?? false) {
+                  print('empty data');
+                  return const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.report,
+                          size: 60,
+                          color: Colors.yellow,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(" لايوجد بلاغات قيد الانتظار"),
+                      ],
+                    ),
+                  );
                 }
                 return ReportListView(
                   snap: snap,
-                  // onPressedAccept: (index, snapshot) {
-                  //   setState(() {});
-                  //   context.read<ReportCubit>().acceptReport(
-                  //       context, snapshot.data!.docs[index].data()["id"]);
-                  //   return null;
-                  // },
-                  // onPressedReject: (index, snapshot) {
-                  //   setState(() {});
-                  //   context.read<ReportCubit>().rejectReport(
-                  //       context, snapshot.data!.docs[index].data()["id"]);
-                  //   return null;
-                  // },
                   futureBuilder: (index) {
                     return FutureBuilder(
                       future: displayUserNamesPending(),
@@ -64,14 +73,39 @@ class _PendingReportScreenState extends State<PendingReportScreen> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
+                        }
+                        if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
-                        } else if (snapshot.hasData) {
+                        }
+                        if (snap.data?.docs.isEmpty ?? false) {
+                          print('empty data');
+                          return const Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.report,
+                                  size: 60,
+                                  color: Colors.yellow,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(" لايوجد بلاغات قيد الانتظار"),
+                              ],
+                            ),
+                          );
+                        }
+                        if (snapshot.hasData) {
                           return Row(
                             children: [
                               const Icon(
                                 Icons.person,
                                 color: Colors.orange,
+                              ),
+                              const SizedBox(
+                                width: 5,
                               ),
                               Text(' ${snapshot.data![index]}'),
                             ],

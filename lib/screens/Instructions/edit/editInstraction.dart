@@ -19,16 +19,31 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)?.settings.arguments as List?;
-    // String? receivedId;
-    // String? receivedAddress;
-    // String? receivedDetails;
-
     return BlocProvider(
-      create: (context) => EditInstractionCubit(),
+      create: (context) {
+        EditInstractionCubit cubit = EditInstractionCubit();
+        cubit.adresseditController.text = arguments![1];
+        cubit.detailseditController.text = arguments[2];
+        // cubit.image.toString() = arguments[3];
+        return cubit;
+      },
       child: BlocConsumer<EditInstractionCubit, EditInstractionState>(
         listener: (context, state) {
           if (state is EditInstractionSuccessState) {
-            Navigator.pushNamed(context, '/AllInsractions');
+            Navigator.pop(context);
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         const AllInsractions(), // استبدل بالشاشة التي تريد الانتقال إليها
+            //   ),
+            // );
+            // Navigator.pushNamed(context, '/AllInsractions');
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         const AllInsractions(), // استبدل بالشاشة التي تريد الانتقال إليها
+            //   ),
+            // );
             message(context, 'تم تعديل الارشاد  بنجاح');
             FlutterToastr.show(
               ' تم تعديل  الأرشاد  بنجاح ',
@@ -41,28 +56,6 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
           }
         },
         builder: (context, state) {
-          // String receivedAddress = arguments[1];
-          // var receivedAddress = context
-          //     .read<EditInstractionCubit>()
-          //     .adresseditController = arguments![1];
-          // // String receivedDetails = arguments[2];
-          // var receivedDetails = context
-          //     .read<EditInstractionCubit>()
-          //     .detailseditController = arguments[2];
-          // if (arguments.length >= 3) {
-          //   String receivedId = arguments[0];
-
-          //   // String receivedAddress = arguments[1];
-          // String receivedAddress
-          // =
-          context.read<EditInstractionCubit>().adresseditController.text =
-              arguments![1];
-          // String receivedDetails = arguments[2];
-          // String receivedDetails =
-          context.read<EditInstractionCubit>().detailseditController.text =
-              arguments[2];
-          // }
-
           return Scaffold(
             appBar: AppBar(
               title: const Text('تعديل الإرشاد'),
@@ -164,6 +157,7 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                             : ButtonWidget(
                                 icon: Icons.telegram,
                                 child: ' تعديل',
+                                side: const BorderSide(color: pColor),
                                 // widthFactor: 0.34,
                                 onPressed: () {
                                   context.read<EditInstractionCubit>().image ==
@@ -171,11 +165,12 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                                       ? message(context,
                                           ' أرفع صورة للتوضيح من فضلك قبل الارسال')
                                       : null;
+
                                   // احفظ البيانات باستخدام Cubit
                                   context
                                       .read<EditInstractionCubit>()
                                       .editInstractionSaveData(
-                                          context, arguments[0]);
+                                          context, arguments![0]);
                                   // print(arguments);
                                 },
                               ),
@@ -184,7 +179,11 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                         ),
                         ButtonWidget(
                           icon: Icons.delete,
-                          child: 'مسح الفورم',
+                          colorIcon: Colors.red,
+                          colorText: Colors.red,
+                          side: const BorderSide(
+                              style: BorderStyle.solid, color: Colors.red),
+                          child: 'حذف ',
                           onPressed: () {
                             context.read<EditInstractionCubit>().clearForm();
                           },

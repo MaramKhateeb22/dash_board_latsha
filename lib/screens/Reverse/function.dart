@@ -48,6 +48,27 @@ Future<List<String>> displayUserNamesReverse() async {
   return userNames;
 }
 
+Future<List<String>> displayUserPhoneReverse() async {
+  List<String> userNames = [];
+
+  QuerySnapshot<Map<String, dynamic>> reverseSnapshot =
+      await FirebaseFirestore.instance.collection("Reverses").get();
+
+  for (var reverse in reverseSnapshot.docs) {
+    var userId = reverse.data()["idUser"];
+
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance.collection("users").doc(userId).get();
+
+    if (userSnapshot.exists) {
+      var userName = userSnapshot.data()!["numberphone"];
+      userNames.add(userName);
+    }
+  }
+
+  return userNames;
+}
+
 //Reject
 
 Future<QuerySnapshot<Map<String, dynamic>>?>? initDataRejectReverse() async {

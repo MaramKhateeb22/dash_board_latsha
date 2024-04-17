@@ -31,11 +31,36 @@ class _ReversesScreenState extends State<ReversesScreen> {
               return const Center(child: CircularProgressIndicator());
             }
             if (snap.hasError) return const Text("Something has error");
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.report,
+                      size: 60,
+                      color: Colors.yellow,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(" لايوجد حجوزات  "),
+                  ],
+                ),
+              );
+            }
             if (snap.data == null) {
               print('empty data');
               return const Text("Empty data");
             }
+            if (snap.data?.docs.isEmpty ?? false) {
+              print('empty data');
+              return const Text(" لا يوجد بيانات للعرض ");
+            }
             return ReverseListView(
+             
               snap: snap,
               futureBuilder: (index) {
                 return FutureBuilder(
@@ -60,6 +85,9 @@ class _ReversesScreenState extends State<ReversesScreen> {
                                             2
                                         ? rejectColor
                                         : doneColor,
+                          ),
+                          const SizedBox(
+                            width: 5,
                           ),
                           Text('${snapshot.data![index]}'),
                         ],

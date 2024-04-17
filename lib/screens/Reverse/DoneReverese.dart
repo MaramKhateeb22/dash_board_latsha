@@ -36,12 +36,21 @@ class _DoneReverseScreenState extends State<DoneReverseScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
+                    }
+                    if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
-                    } else if (snapshot.hasData) {
+                    }
+                    if (snap.data?.docs.isEmpty ?? false) {
+                      print('empty data');
+                      return const Text(" لا يوجد بيانات للعرض ");
+                    }
+                    if (snapshot.hasData) {
                       return Row(
                         children: [
                           const Icon(Icons.person, color: doneColor),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Text('${snapshot.data![index]}'),
                         ],
                       );

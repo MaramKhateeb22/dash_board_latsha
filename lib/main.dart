@@ -1,5 +1,5 @@
-import 'package:dash_board_mopidati/screens/Insects/add/AddInsects.dart';
 import 'package:dash_board_mopidati/screens/Insects/AllInsects.dart';
+import 'package:dash_board_mopidati/screens/Insects/add/AddInsects.dart';
 import 'package:dash_board_mopidati/screens/Insects/edit/editInsect.dart';
 import 'package:dash_board_mopidati/screens/Instructions/AllInstraction.dart';
 import 'package:dash_board_mopidati/screens/Instructions/add/NewInstraction.dart';
@@ -20,7 +20,9 @@ import 'package:dash_board_mopidati/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import 'firebase_options.dart';
 import 'home.dart';
@@ -40,6 +42,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
+        child: child!,
+      ),
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -51,6 +63,12 @@ class MyApp extends StatelessWidget {
       locale: const Locale("ar", "AE"),
       title: 'Flutter Demo',
       theme: ThemeData(
+        expansionTileTheme: const ExpansionTileThemeData(
+          textColor: Colors.grey,
+          iconColor: Colors.grey,
+        ),
+        fontFamily: 'Rubik',
+        // textTheme: GoogleFonts.rubikTextTheme(),
         cardTheme: CardTheme(
           shadowColor: Colors.grey,
           shape: RoundedRectangleBorder(
@@ -61,7 +79,7 @@ class MyApp extends StatelessWidget {
           elevation: 10,
           margin: const EdgeInsets.all(4),
         ),
-        cardColor: cardbackground,
+        cardColor: backgroundColor,
         listTileTheme: const ListTileThemeData(iconColor: pColor),
         scaffoldBackgroundColor: backgroundColor,
         primaryColor: backgroundColor,
