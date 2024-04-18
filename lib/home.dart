@@ -21,9 +21,9 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/syria.png'),
+            Image.asset('assets/images/syria-removebg-preview.png'),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
