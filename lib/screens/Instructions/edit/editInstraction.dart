@@ -78,7 +78,7 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                               : Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: pColor,
+                                    color: backgroundColorIamge,
                                   ),
                                   width: 300,
                                   height: 300,
@@ -88,11 +88,25 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                                           .read<EditInstractionCubit>()
                                           .selectImage(context);
                                     },
-                                    child: const Text(
-                                      'ارفع صورة لتوضيح الارشاد',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_photo_alternate,
+                                          size: 25,
+                                          color: backgroundColorIamgeText,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'اختر صورة الحشرة',
+                                          style: TextStyle(
+                                            color: backgroundColorIamgeText,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -156,7 +170,7 @@ class _EditInstarctionScreenState extends State<EditInstarctionScreen> {
                               )
                             : ButtonWidget(
                                 icon: Icons.telegram,
-                                child: ' تعديل',
+                                child: ' حفظ',
                                 side: const BorderSide(color: pColor),
                                 // widthFactor: 0.34,
                                 onPressed: () {

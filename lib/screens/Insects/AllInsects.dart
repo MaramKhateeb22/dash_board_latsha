@@ -52,7 +52,7 @@ class _AllInsectPriceScreenState extends State<AllInsectPriceScreen> {
             itemCount: snap.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 8),
                 child: Card(
                   color: backgroundColor,
                   child: Column(
@@ -160,7 +160,7 @@ class _AllInsectPriceScreenState extends State<AllInsectPriceScreen> {
           side: const BorderSide(color: pColor),
           child: 'إضافة حشرة ',
           icon: Icons.add,
-          backgroundColors: cardbackground,
+          // backgroundColors: cardbackground,
           onPressed: () {
             Navigator.of(context).pushReplacement(
               MaterialPageRoute(

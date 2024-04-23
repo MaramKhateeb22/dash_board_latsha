@@ -1,4 +1,3 @@
-import 'package:dash_board_mopidati/screens/Instructions/AllInstraction.dart';
 import 'package:dash_board_mopidati/screens/Instructions/add/cubit/cubit.dart';
 import 'package:dash_board_mopidati/screens/Instructions/add/cubit/state.dart';
 import 'package:dash_board_mopidati/shared/constant.dart';
@@ -64,9 +63,8 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                                 )
                               : Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: pColor,
-                                  ),
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: backgroundColorIamge),
                                   width: 300,
                                   height: 300,
                                   child: TextButton(
@@ -75,11 +73,25 @@ class _NewInstarctionScreenState extends State<NewInstarctionScreen> {
                                           .read<AddInstractionCubit>()
                                           .selectImage(context);
                                     },
-                                    child: const Text(
-                                      'ارفع صورة لتوضيح الارشاد',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                      ),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_photo_alternate,
+                                          size: 25,
+                                          color: backgroundColorIamgeText,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          'اختر صورة الحشرة',
+                                          style: TextStyle(
+                                            color: backgroundColorIamgeText,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

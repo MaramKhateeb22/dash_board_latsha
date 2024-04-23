@@ -51,16 +51,16 @@ class _AllUsersState extends State<AllUsers> {
                   color: backgroundColor,
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Row(
                       // mainAxisAlignment: MainAxisAlignment.,
                       children: [
                         CircleAvatar(
-                          radius: 45,
+                          radius: 40,
                           child: Image.asset('assets/images/images.png'),
                         ),
                         const SizedBox(
-                          width: 20,
+                          width: 12,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

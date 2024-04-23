@@ -18,7 +18,7 @@ class ReverseListView extends StatelessWidget {
       var header = {
         "Content-Type": "application/json",
         "Authorization":
-            "key=AAAA6nF344s:APA91bEtlMhAQEo-7aOmGe04ZNCWs07vfpmLQn9fS9VAcb4G7uz0bMIJq8WtFfbYVMUViEHmZ4UrWs9seWJIztbl2NIXdeYxVtvnM3SH3jcoLCQS9ELGOmxJYgPO6R8yuwSpjNR111q9",
+            "key=eAtD39SiQpa9OrhflJgwu9:APA91bFGDw8wtQ8hUYgNyIiLmeyCKb9g7BUJJoG3xXHeHKnZQa2yZVBZogYAE1QSGsCJhDoiXkcUfFnsRvp-fxwKxfbsm14t3ioWYp3sdfKaH2ojIRD6xAvwSvBqqBgnpN6mzMP270O9",
       };
       var request = {
         "notification": {
@@ -30,7 +30,7 @@ class ReverseListView extends StatelessWidget {
         "priority": "high",
         // "to": "/topics/all",
         "to":
-            "fZhnNsqkQfGiJOj2mSY21r:APA91bFTOtFkiAp3XbX8Rvyye9_Rj9bHq6IBpsQ7M56z4SPo9S0gBSrsYj7CBwRq-YTK0tuNbGxIGyTy0jMjqO5ZGorsnl0Nyw2AOKj8QgSG_CvTJ4fv-Egzlv6ckTJ__TtJwXdOTccc",
+            "eAtD39SiQpa9OrhflJgwu9:APA91bFGDw8wtQ8hUYgNyIiLmeyCKb9g7BUJJoG3xXHeHKnZQa2yZVBZogYAE1QSGsCJhDoiXkcUfFnsRvp-fxwKxfbsm14t3ioWYp3sdfKaH2ojIRD6xAvwSvBqqBgnpN6mzMP270O9",
       };
       var client = Client();
       var response = await client.post(
@@ -194,7 +194,7 @@ class ReverseListView extends StatelessWidget {
                                                     ? rejectColor
                                                     : doneColor),
                                     SizedBox(
-                                      width: 230,
+                                      // width: ,
                                       child: Text(
                                         "${snap.data!.docs[index].data()["Adress"]}",
                                         maxLines: 1,
@@ -377,8 +377,8 @@ class ReverseListView extends StatelessWidget {
                             children: [
                               Container(
                                 // clipBehavior: Clip.antiAlias,
-                                width: 70,
-                                height: 200,
+                                width: 50,
+                                height: 180,
                                 color: '${snap.data!.docs[index].data()["statusReverse"]}' ==
                                         '0'
                                     ? pendingColor

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
-const Color pColor = Colors.green;
+const Color pColor = Color.fromARGB(255, 22, 202, 28);
 const Color sColor = Colors.blue;
 const Color rejectColor = Colors.red;
 const Color pendingColor = Colors.orange;
@@ -9,7 +9,8 @@ const Color acceptColor = Colors.green;
 const Color doneColor = Colors.pink;
 const Color backgroundColor = Colors.white;
 const Color cardbackground = Color.fromARGB(255, 240, 237, 237);
-
+const Color backgroundColorIamge = Color.fromARGB(60, 126, 125, 125);
+const Color backgroundColorIamgeText = Colors.green;
 Color getStatusColor(int statusReport) {
   if (statusReport == 0) {
     return Colors.orange;

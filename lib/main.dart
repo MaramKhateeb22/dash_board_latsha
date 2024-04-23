@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
         Locale("ar", "AE"), // OR Locale('ar', 'AE') OR Other RTL locales
       ],
       locale: const Locale("ar", "AE"),
-      title: 'Flutter Demo',
+      title: 'Admin Latsha ',
       theme: ThemeData(
         expansionTileTheme: const ExpansionTileThemeData(
           textColor: Colors.grey,
@@ -92,6 +92,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+
         //text
         textTheme: const TextTheme(
           bodyMedium: TextStyle(
@@ -105,7 +106,16 @@ class MyApp extends StatelessWidget {
 
         //appbar theme
         appBarTheme: const AppBarTheme(
-          color: pColor,
+          titleTextStyle: TextStyle(
+              fontFamily: 'Rubik',
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
+          // color: pColor,
+          color: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          iconTheme: IconThemeData(color: Colors.green),
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarBrightness: Brightness.light,
             statusBarIconBrightness: Brightness.light,

@@ -62,53 +62,55 @@ class _AllInsractionsState extends State<AllInsractions> {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
-                                color: pColor,
+                                // color: pColor,
                                 // color: cardbackground,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               // width: 130,
                               // height: 130,
                               child: Image.network(
-                                  width: 120,
-                                  height: 150,
+                                  width: double.infinity,
+                                  height: 200,
                                   fit: BoxFit.cover,
                                   "${snap.data!.docs[index].data()["imageLink"]}"),
                             ),
                             const SizedBox(
-                              width: 10,
+                              height: 10,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CustomInkWell(
-                                  style: const TextStyle(
-                                    height: 1.2,
-                                    fontSize: 23,
-                                    color: pColor,
-                                  ),
-                                  // maxLines: 3,
-                                  snap: snap,
-                                  index: index,
-                                  adress: 'Adress',
-                                ),
-                                CustomInkWell(
-                                  maxLines: 3,
-                                  snap: snap,
-                                  adress: 'Details Instraction',
-                                  index: index,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ],
+                            CustomInkWell(
+                              style: const TextStyle(
+                                // height: 1.2,
+                                fontSize: 23,
+                                color: pColor,
+                              ),
+                              // maxLines: 3,
+                              snap: snap,
+                              index: index,
+                              adress: 'Adress',
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            CustomInkWell(
+                              style: const TextStyle(
+                                  letterSpacing: 1, height: 1.5),
+                              maxLines: 2,
+                              snap: snap,
+                              adress: 'Details Instraction',
+                              index: index,
+                              // style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          height: 15,
                         ),
                         // const SizedBox(
                         //   height: 5,
@@ -170,12 +172,12 @@ class _AllInsractionsState extends State<AllInsractions> {
         padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20),
         child: ButtonWidget(
           side: const BorderSide(color: pColor),
-          backgroundColors: cardbackground,
+          // backgroundColors: cardbackground,
           widthFactor: 1,
           child: 'إضافة إرشاد',
           icon: Icons.addchart_outlined,
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
+          onPressed: () async {
+            await Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                   builder: (context) => const NewInstarctionScreen()),
             );

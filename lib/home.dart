@@ -11,6 +11,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        title: const Text(
+          'لطشة ',
+          style: TextStyle(color: Colors.black),
+        ),
         leading: IconButton(
           onPressed: () {
             scaffoldKey.currentState?.openDrawer();
@@ -23,7 +27,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/syria-removebg-preview.png'),
+            Image.asset('assets/images/image.png'),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
@@ -31,7 +35,10 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text(
                 'هل من جديد؟!',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    fontFamily: 'Rubik'),
               ),
             ),
           ],

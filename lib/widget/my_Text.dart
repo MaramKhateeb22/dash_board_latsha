@@ -17,8 +17,8 @@ class CustomInkWell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 190,
-      height: 70,
+      width: 300,
+      // height: 0,
       child: InkWell(
         child: Text(
           "${snap.data!.docs[index].data()[adress]}",
@@ -35,6 +35,7 @@ class CustomInkWell extends StatelessWidget {
                 content: SingleChildScrollView(
                   child: Text(
                     "${snap.data!.docs[index].data()[adress]}",
+                    style: const TextStyle(letterSpacing: 1, height: 1.5),
                   ),
                 ),
                 actions: <Widget>[

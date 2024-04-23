@@ -284,7 +284,7 @@ class _ItemeReverseState extends State<ItemeReverse> {
                     colorText: Colors.grey,
                     icon: Icons.add_location,
                     colorIcon: Colors.grey,
-                    widthFactor: 0.7,
+                    // widthFactor: 0.7,
                     onPressed: () async {
                       double latitude = 37.094722;
                       double longitude = 36.203842;
